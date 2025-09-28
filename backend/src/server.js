@@ -5,8 +5,6 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
-console.log(`URL: ${process.env.MONGO_URI}`);
-
 connectDB()
   .then(() => {
     app.listen(PORT, () => {
