@@ -67,10 +67,10 @@ function SignUp() {
         <div
           className={`bg-white rounded-xl shadow-lg w-full max-w-md p-8 border-[1px] border-[#ddd]`}
         >
-          <h1 className="text-3xl font-bold mb-2 text-[#ff4d2d] uppercase">
+          <h1 className="text-3xl font-bold mb-2 text-[#ff4d2d] uppercase text-center">
             QuickBite
           </h1>
-          <p className="text-gray-600 mb-8 capitalize">
+          <p className="text-gray-600 mb-8 capitalize  text-center">
             create your account to get started with delicious food on your door
             steps
           </p>
