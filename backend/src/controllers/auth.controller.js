@@ -5,7 +5,7 @@ import generateToken from "../utils/jwt.token.js";
 
 export const signUp = async (req, res) => {
   try {
-    const { fullName, email, password, mobile, role } = req.body;
+    const { fullName, email, password, mobileNumber, role } = req.body;
 
     const user = await User.findOne({ email });
 
@@ -22,7 +22,7 @@ export const signUp = async (req, res) => {
       fullName,
       email,
       password: hashedPassword,
-      mobile,
+      mobileNumber,
       role,
     });
 
