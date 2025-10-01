@@ -1,14 +1,17 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { IoHomeSharp } from "react-icons/io5";
 
 import { serverURI } from "../App";
+import { notifyError, validateEmailPassword } from "../utils/validator.js";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -17,9 +20,18 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const userNavigate = useNavigate();
-  const notify = (message) => toast.success(message);
+
+  const notifyCustom = (message, icon, duration) =>
+    toast(message, {
+      icon,
+      duration: duration || 1500,
+    });
 
   const handleLogin = async () => {
+    const errorMessage = validateEmailPassword({ email, password });
+
+    if (errorMessage) return;
+
     try {
       const response = await axios.post(
         `${serverURI}/api/auth/login`,
@@ -30,10 +42,10 @@ function Login() {
         { withCredentials: true }
       );
 
-      notify("Logged In successfully!");
-
       setEmail("");
       setPassword("");
+
+      notifyCustom("Redirecting To Home Page!", <IoHomeSharp />);
 
       setTimeout(() => {
         userNavigate("/");
@@ -42,7 +54,7 @@ function Login() {
       console.log(response);
     } catch (error) {
       console.log(error);
-      notify(error.response.data.message || "Something went wrong!");
+      notifyError(error.response.data.message || "Something went wrong!");
     }
   };
 

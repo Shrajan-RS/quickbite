@@ -1,14 +1,17 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { IoLogInSharp } from "react-icons/io5";
 
 import { serverURI } from "../App";
+import { notifyError, validateAllFields } from "../utils/validator.js";
 
 function SignUp() {
   const [fullName, setFullName] = useState("");
@@ -20,9 +23,25 @@ function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
 
   const userNavigate = useNavigate();
-  const notify = (message) => toast.success(message);
+
+  const notifyCustom = (message, icon) =>
+    toast(message, {
+      icon,
+      duration: 1800,
+    });
 
   const handleSignUp = async () => {
+    const errorMessage = validateAllFields({
+      fullName,
+      email,
+      password,
+      mobileNumber,
+    });
+
+    if (errorMessage) {
+      return;
+    }
+
     try {
       const response = await axios.post(
         `${serverURI}/api/auth/signup`,
@@ -36,25 +55,21 @@ function SignUp() {
         { withCredentials: true }
       );
 
-      notify("Account created successfully!");
-
       setFullName("");
       setEmail("");
       setPassword("");
       setMobileNumber("");
       setRole("");
 
-      setTimeout(() => {
-        notify("Redirecting To Login Page!");
-      }, 3000);
+      notifyCustom("Redirecting To Login Page!", <IoLogInSharp />);
 
       setTimeout(() => {
         userNavigate("/login");
-      }, 4500);
-
-      console.log(response);
+      }, 2000);
     } catch (error) {
-      console.log(error);
+      notifyError(error.response.data.message || "Failed To Sign Up!");
+
+      console.log("Error: ", error);
     }
   };
 
