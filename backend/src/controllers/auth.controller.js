@@ -4,7 +4,6 @@ import crypto from "crypto";
 import { User } from "../models/user.model.js";
 import generateToken from "../utils/jwt.token.js";
 import { sendMail } from "../utils/mail.js";
-import { log } from "console";
 
 export const signUp = async (req, res) => {
   try {
@@ -177,5 +176,63 @@ export const logout = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: `failed to log out ${error}` });
     console.log("Failed to login out user! \n Error: ", error);
+  }
+};
+
+export const googleAuthSignUp = async (req, res) => {
+  try {
+    const { fullName, email, mobileNumber, role } = req.body;
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        fullName,
+        email,
+        mobileNumber,
+        role,
+      });
+
+      const token = await generateToken(user._id);
+
+      res.cookie("token", token, {
+        secure: false,
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      });
+    }
+
+    res.status(201).json({ message: "User Created Successfully!" });
+  } catch (error) {
+    res.status(500).json({ message: `Failed To Create User!` });
+    console.log("Error: ", error);
+  }
+};
+
+export const googleAuthLogin = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user)
+      return res
+        .status(400)
+        .json({ message: "User Not Found, Sign Up first!" });
+
+    const token = await generateToken(user._id);
+
+    res.cookie("token", token, {
+      secure: false,
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+    });
+
+    res.status(200).json({ message: "Logged In Successfully!" });
+  } catch (error) {
+    res.status(500).json({ message: `Failed To Login User!` });
+    console.log("Error: ", error);
   }
 };

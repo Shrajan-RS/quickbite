@@ -33,7 +33,7 @@ export const validateAllFields = ({
 
   if (!password || password.trim() === "")
     return notifyError("Password Is Required");
-  if (password.length < 5)
+  if (password.length < 6)
     return notifyError("Password Must Be At Least 6 Characters Long!");
 
   if (!mobileNumber || mobileNumber.trim() === "")
@@ -52,7 +52,7 @@ export const validateEmail = ({ email }) => {
 export const validatePassword = ({ password }) => {
   if (!password || password.trim() === "")
     return notifyError("Password Is Required");
-  if (password.length < 5)
+  if (password.length < 6)
     return notifyError("Password Must Be At Least 6 Characters Long!");
 };
 
@@ -62,7 +62,7 @@ export const validateEmailPassword = ({ email, password }) => {
 
   if (!password || password.trim() === "")
     return notifyError("Password Is Required");
-  if (password.length < 5)
+  if (password.length < 6)
     return notifyError("Password Must Be At Least 6 Characters Long!");
 
   return null;
