@@ -15,6 +15,8 @@ import { serverURI } from "../App";
 import { notifyError, validateAllFields } from "../utils/validator.js";
 import { auth } from "../../services/firebase.js";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../redux/user.slice.js";
 
 function SignUp() {
   const [fullName, setFullName] = useState("");
@@ -22,6 +24,8 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [role, setRole] = useState("user");
+
+  const dispatch = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -59,6 +63,8 @@ function SignUp() {
         },
         { withCredentials: true }
       );
+
+      dispatch(setUserData(response.data));
 
       setFullName("");
       setEmail("");
@@ -108,6 +114,7 @@ function SignUp() {
         user,
         { withCredentials: true }
       );
+      dispatch(setUserData(serverResponse.data));
 
       notifyCustom("Redirecting To Login Page!", <IoLogInSharp />);
 

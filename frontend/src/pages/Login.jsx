@@ -16,6 +16,8 @@ import { serverURI } from "../App";
 import { notifyError, validateEmailPassword } from "../utils/validator.js";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../services/firebase.js";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../redux/user.slice.js";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -23,6 +25,8 @@ function Login() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   const userNavigate = useNavigate();
 
@@ -47,6 +51,8 @@ function Login() {
         },
         { withCredentials: true }
       );
+
+      dispatch(setUserData(response.data));
 
       setEmail("");
       setPassword("");
@@ -76,6 +82,8 @@ function Login() {
         `${serverURI}/api/auth/google-auth-login`,
         email
       );
+
+      dispatch(setUserData(serverResponse.data));
 
       notifyCustom("Redirecting To Home Page!", <IoHomeSharp />);
 
