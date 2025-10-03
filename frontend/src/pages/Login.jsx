@@ -57,11 +57,11 @@ function Login() {
       setEmail("");
       setPassword("");
 
-      notifyCustom("Redirecting To Home Page!", <IoHomeSharp />);
+      // notifyCustom("Redirecting To Home Page!", <IoHomeSharp />);
 
-      setTimeout(() => {
-        userNavigate("/");
-      }, 2000);
+      // setTimeout(() => {
+      //   userNavigate("/");
+      // }, 2000);
       setLoading(false);
     } catch (error) {
       notifyError(error.response.data.message || "Something went wrong!");
@@ -85,11 +85,11 @@ function Login() {
 
       dispatch(setUserData(serverResponse.data));
 
-      notifyCustom("Redirecting To Home Page!", <IoHomeSharp />);
+      // notifyCustom("Redirecting To Home Page!", <IoHomeSharp />);
 
-      setTimeout(() => {
-        userNavigate("/");
-      }, 2000);
+      // setTimeout(() => {
+      //   userNavigate("/");
+      // }, 2000);
     } catch (error) {
       console.log(error);
       notifyError(error.response.data.message || "Something went wrong!");

@@ -72,11 +72,11 @@ function SignUp() {
       setMobileNumber("");
       setRole("");
 
-      notifyCustom("Redirecting To Login Page!", <IoLogInSharp />);
+      // notifyCustom("Redirecting To Login Page!", <IoLogInSharp />);
 
-      setTimeout(() => {
-        userNavigate("/login");
-      }, 2000);
+      // setTimeout(() => {
+      //   userNavigate("/login");
+      // }, 2000);
       setLoading(false);
     } catch (error) {
       notifyError(error.response.data.message || "Failed To Sign Up!");
@@ -116,11 +116,11 @@ function SignUp() {
       );
       dispatch(setUserData(serverResponse.data));
 
-      notifyCustom("Redirecting To Login Page!", <IoLogInSharp />);
+      // notifyCustom("Redirecting To Login Page!", <IoLogInSharp />);
 
-      setTimeout(() => {
-        userNavigate("/login");
-      }, 2000);
+      // setTimeout(() => {
+      //   userNavigate("/login");
+      // }, 2000);
     } catch (error) {
       console.log("Error: ", error);
     }

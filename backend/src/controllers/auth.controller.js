@@ -230,7 +230,7 @@ export const googleAuthLogin = async (req, res) => {
       httpOnly: true,
     });
 
-    res.status(200).json({ message: "Logged In Successfully!" });
+    res.status(200).json({ message: "Logged In Successfully!", user });
   } catch (error) {
     res.status(500).json({ message: `Failed To Login User!` });
     console.log("Error: ", error);

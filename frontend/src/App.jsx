@@ -8,11 +8,13 @@ import ForgotPassword from "./pages/ForgotPassword";
 import HomePage from "./pages/HomePage";
 
 import useGetCurrentUser from "./hooks/useGetCurrentUser";
+import useGetUserCity from "./hooks/useGetUserCity";
 
 export const serverURI = "http://localhost:7000";
 
 function App() {
   useGetCurrentUser();
+  useGetUserCity();
 
   const { userData } = useSelector((state) => state.user);
 
@@ -27,7 +29,7 @@ function App() {
         />
         <Route
           path="/login"
-          element={!userData ? <SignUp /> : <Navigate to={"/"} />}
+          element={!userData ? <Login /> : <Navigate to={"/"} />}
         />
         <Route
           path="/forgot-password"
